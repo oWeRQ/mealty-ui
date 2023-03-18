@@ -12,10 +12,37 @@ export class ProductsComponent {
   ) {}
 
   products: IMealtyProduct[] = [];
+  productsByDay: IMealtyProduct[][] = [[]];
+
+  get selectedProducts() {
+    return this.productsByDay.flat();
+  }
+
+  get availableProducts() {
+    return this.products.filter(product => !this.selectedProducts.includes(product));
+  }
 
   ngOnInit() {
     this.mealtyApi.getProducts().subscribe((products) => {
       this.products = products;
     });
+  }
+
+  addDay() {
+    this.productsByDay.push([]);
+  }
+
+  removeDay(index: number) {
+    this.productsByDay.splice(index, 1);
+  }
+
+  selectProduct(product: IMealtyProduct) {
+    this.productsByDay.at(-1)?.push(product);
+  }
+
+  unselectProduct(product: IMealtyProduct) {
+    for (const i in this.productsByDay) {
+      this.productsByDay[i] = this.productsByDay[i].filter(p => p !== product);
+    }
   }
 }

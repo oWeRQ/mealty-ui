@@ -4,16 +4,22 @@
             Day {{ i + 1 }}
             <button class="ml-4 text-sm opacity-30 hover:opacity-100" (click)="removeDay(i)">Remove</button>
         </h3>
-        <div class="grid grid-cols-8 gap-x-4 gap-y-8">
+        <div *ngIf="products.length" class="p-4 grid grid-cols-8 gap-x-4 gap-y-8 bg-gray-100 rounded-lg">
             <app-product-card *ngFor="let product of products" [product]="product" (click)="unselectProduct(product)"></app-product-card>
+        </div>
+        <div class="mt-4 flex justify-end">
+            <app-products-summary [products]="products"></app-products-summary>
         </div>
         <hr class="my-4" />
     </div>
-    <button class="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" (click)="addDay()">Add Day</button>
+    <div class="flex justify-between items-center">
+        <button class="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" (click)="addDay()">Add Day</button>
+        <app-products-summary [products]="selectedProducts"></app-products-summary>
+    </div>
     <hr class="my-4" />
 
     <h2 class="text-xl font-bold mb-2">Available</h2>
-    <div class="grid grid-cols-8 gap-x-4 gap-y-8">
+    <div class="p-4 grid grid-cols-8 gap-x-4 gap-y-8">
         <app-product-card *ngFor="let product of availableProducts" [product]="product" (click)="selectProduct(product)"></app-product-card>
     </div>
 </div>

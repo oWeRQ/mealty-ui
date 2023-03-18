@@ -12,7 +12,7 @@ export class ProductsComponent {
   ) {}
 
   products: IMealtyProduct[] = [];
-  productsByDay: IMealtyProduct[][] = [[]];
+  productsByDay: IMealtyProduct[][] = [];
 
   get selectedProducts() {
     return this.productsByDay.flat();
@@ -37,6 +37,9 @@ export class ProductsComponent {
   }
 
   selectProduct(product: IMealtyProduct) {
+    if (this.productsByDay.length === 0)
+      this.addDay();
+
     this.productsByDay.at(-1)?.push(product);
   }
 

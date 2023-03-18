@@ -46,7 +46,12 @@ export class ProductsComponent {
   }
 
   removeDay(index: number) {
+    if (this.productsByDay[index].length && !confirm(`Remove day ${index + 1}`))
+      return;
+
     this.productsByDay.splice(index, 1);
+
+    this.saveStorage();
   }
 
   selectProduct(product: IMealtyProduct) {
@@ -62,5 +67,7 @@ export class ProductsComponent {
     for (const i in this.productsByDay) {
       this.productsByDay[i] = this.productsByDay[i].filter(p => p !== product);
     }
+
+    this.saveStorage();
   }
 }

@@ -25,7 +25,20 @@ export class ProductsComponent {
   ngOnInit() {
     this.mealtyApi.getProducts().subscribe((products) => {
       this.products = products;
+      this.loadStorage();
     });
+  }
+
+  saveStorage() {
+    const data = this.productsByDay.map((products) => products.map((product) => product.id));
+    window.localStorage.setItem('productsByDay', JSON.stringify(data));
+  }
+
+  loadStorage() {
+    try {
+      const data: string[][] = JSON.parse(window.localStorage.getItem('productsByDay') || '[]');
+      this.productsByDay = data.map((productIds) => this.products.filter((product) => productIds.includes(product.id)));
+    } catch (e) {}
   }
 
   addDay() {
@@ -41,6 +54,8 @@ export class ProductsComponent {
       this.addDay();
 
     this.productsByDay.at(-1)?.push(product);
+
+    this.saveStorage();
   }
 
   unselectProduct(product: IMealtyProduct) {

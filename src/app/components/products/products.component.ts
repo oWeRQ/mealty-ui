@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MealtyApiService } from 'src/app/services/mealty-api.service';
+import { IMealtyProduct, MealtyApiService } from 'src/app/services/mealty-api.service';
 
 @Component({
   selector: 'app-products',
@@ -11,7 +11,11 @@ export class ProductsComponent {
     private mealtyApi: MealtyApiService,
   ) {}
 
+  products: IMealtyProduct[] = [];
+
   ngOnInit() {
-    this.mealtyApi.getProducts().subscribe(console.log);
+    this.mealtyApi.getProducts().subscribe((products) => {
+      this.products = products;
+    });
   }
 }

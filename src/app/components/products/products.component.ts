@@ -64,8 +64,11 @@ export class ProductsComponent {
   }
 
   unselectProduct(product: IMealtyProduct) {
-    for (const i in this.productsByDay) {
-      this.productsByDay[i] = this.productsByDay[i].filter(p => p !== product);
+    for (const products of this.productsByDay) {
+      const idx = products.indexOf(product);
+      if (idx !== -1) {
+        products.splice(idx, 1);
+      }
     }
 
     this.saveStorage();

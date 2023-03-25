@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IMealtyProduct } from 'src/app/services/mealty-api.service';
 
 @Component({
@@ -8,4 +8,6 @@ import { IMealtyProduct } from 'src/app/services/mealty-api.service';
 })
 export class ProductCardComponent {
   @Input() product!: IMealtyProduct;
+  @Output() add = new EventEmitter();
+  @Output() remove = new EventEmitter();
 }
